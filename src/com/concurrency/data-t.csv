@@ -1,0 +1,4 @@
+dateRep,day,month,year,cases,deaths,countriesAndTerritories,geoId,countryterritoryCode,popData2019,continentExp,Cumulative_number_for_14_days_of_COVID-19_cases_per_100000
+03/11/2020,3,11,2020,95,3,Afghanistan,AF,AFG,38041757,Asia,3.78794281
+02/11/2020,2,11,2020,132,5,Afghanistan,AF,AFG,38041757,Asia,3.76691329
+02/06/2020,2,6,2020,758,31,Canada,CA,CAN,37411038,America,36.44111666
