@@ -1,6 +1,6 @@
 package com.concurrency.CovidTreatment;
 
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 public class CovidTreatment {
     //  Στατικές μεταβλητές προβλήματος
@@ -27,10 +27,6 @@ public class CovidTreatment {
         Covid covid = new Covid(treatmentUnits);
         covid.start();
         //  Δημιουργία των διαθέσιμων νοσοκομείων (1 ή 3 ανάλογα με το ερώτημα)
-        Hospital[] hospitals = new Hospital[HOSPITAL_NUM];
-        IntStream.range(0, hospitals.length).forEach(i -> {
-            hospitals[i] = new Hospital(treatmentUnits);
-            hospitals[i].start();
-        });
+        Arrays.stream(new Hospital[HOSPITAL_NUM]).forEach(h -> new Hospital(treatmentUnits).start());
     }
 }
