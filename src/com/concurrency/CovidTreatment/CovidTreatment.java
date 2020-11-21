@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 public class CovidTreatment {
     //  Στατικές μεταβλητές προβλήματος
     //  Μέγιστος αριθμός κρουσμάτων k
-    public static final int MAX_CASES = 300;
+    public static final int MAX_CASES = 150;
     //  Πλήθος επαναλήψεων
     public static final int LOOPS = 10;
     //  Χωρητικότητα σε εντατικές Ε
@@ -17,7 +17,7 @@ public class CovidTreatment {
     //  Συχνότητα επώασης κρουσμάτων
     public static final int CURE_FREQUENCY = 5000;
     //  Αριθμός διαθέσιμων νοσοκομείων
-    public static final int HOSPITAL_NUM = 3;
+    public static final int HOSPITAL_NUM = 1;
 
     //  Πρόγραμμα εκτέλεσης έναν ιό και μεταβλητό αριθμό διαθέσιμων νοσοκομείων για θεραπεία
     public static void main(String[] args) {

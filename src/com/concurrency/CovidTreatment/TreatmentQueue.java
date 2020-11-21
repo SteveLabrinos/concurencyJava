@@ -2,6 +2,7 @@ package com.concurrency.CovidTreatment;
 
 public class TreatmentQueue {
     //  Χαρακτηριστικά κλάσης διαθέσιμων κλινών και κρουσμάτων που δεν λαμβάνουν θεραπεία
+    private static int cnt = 0;
     private int availableBeds;
     private int unsolvedCases = 0;
 
@@ -20,8 +21,10 @@ public class TreatmentQueue {
         } else {    //  Οι κλίνες επαρκούν για να δεχθούν τα νέα κρούσματα
             this.availableBeds -= newCases;
         }
-        System.out.format("\nΕμφανίστηκαν %d νέα κρούσματα για νοσηλεία. " +
-                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d", newCases, this.unsolvedCases, this.availableBeds);
+        cnt ++;
+        System.out.format("\nΠεριστατικό: %d, Εμφανίστηκαν %d νέα κρούσματα για νοσηλεία. " +
+                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d",
+                cnt, newCases, this.unsolvedCases, this.availableBeds);
     }
 
     //  Μέθοδος αφαίρεσης κρουσμάτων
@@ -41,7 +44,9 @@ public class TreatmentQueue {
                 this.unsolvedCases = 0; //  Δεν υπάρχουν πλέον κρούσματα χωρίς νοσηλεία
             }
         }
-        System.out.format("\nΑνάρρωσαν %d ασθενείες. " +
-                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d", solvedCases, this.unsolvedCases, this.availableBeds);
+        cnt ++;
+        System.out.format("\nΠεριστατικό: %d, Ανάρρωσαν %d ασθενείες. " +
+                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d",
+                cnt, solvedCases, this.unsolvedCases, this.availableBeds);
     }
 }
