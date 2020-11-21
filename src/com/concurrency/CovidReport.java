@@ -92,7 +92,8 @@ public class CovidReport extends Thread {
         int len = data.size();
         IntStream.range(0, covidThreads.length).forEach(i ->{
             //  Μετατροπή της λίστας σε πίνακα για την περεταίρω επεξεργασία του
-            covidThreads[i] = new CovidReport(data, i * len / NUM_OF_THREADS, (i + 1) * len / NUM_OF_THREADS);
+            covidThreads[i] = new CovidReport(data, i * len / NUM_OF_THREADS,
+                    (i + 1) * len / NUM_OF_THREADS);
             covidThreads[i].start();
         });
 
@@ -142,8 +143,7 @@ public class CovidReport extends Thread {
         csvOutput.append("total_cases");
         csvOutput.append("\n");
         //  Ταξινόμηση με αύξουσα σειρά κλειδιού
-        TreeMap<String, Integer> sortedHm = new TreeMap<>();
-        sortedHm.putAll(hm);
+        TreeMap<String, Integer> sortedHm = new TreeMap<>(hm);
         //  Εισαγωγή των δεδομένων σε κάθε γραμμή του αρχείου
         for (Map.Entry<String, Integer> entry : sortedHm.entrySet()) {
             csvOutput.append(entry.getKey());
