@@ -90,7 +90,7 @@ public class CovidReport extends Thread {
 
         //  Δημιουργία νημάτων για την επεξεργασία των δεδομένων του πίνακα
         int len = data.size();
-        IntStream.range(0, covidThreads.length).forEach(i ->{
+        IntStream.range(0, covidThreads.length).forEach(i -> {
             //  Μετατροπή της λίστας σε πίνακα για την περεταίρω επεξεργασία του
             covidThreads[i] = new CovidReport(data, i * len / NUM_OF_THREADS,
                     (i + 1) * len / NUM_OF_THREADS);

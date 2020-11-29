@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ApiThread extends Thread {
     //  Στατικές μεταβλητές προγράμματος
@@ -22,6 +21,7 @@ public class ApiThread extends Thread {
 
     //  Χαρακτηριστικά νήματος
     private final int numOfRequests;
+    //  Αρχικοποίηση με τη μέγιστη δυνατή τιμή
     private int minStr = Integer.MAX_VALUE;
     private int maxStr;
     private final HashMap<String, Integer> wordCount = new HashMap<>();
