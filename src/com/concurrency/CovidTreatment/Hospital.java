@@ -1,10 +1,11 @@
 package com.concurrency.CovidTreatment;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class Hospital extends Thread {
     //  Χαρακτηριστικά νήματος νοσοκομείου
-    private TreatmentQueue queue;
+    private final TreatmentQueue queue;
 
     //  Κατασκευαστής
     public Hospital(TreatmentQueue queue) { this.queue = queue; }
@@ -13,13 +14,13 @@ public class Hospital extends Thread {
     public void run() {
         // Επώαση κρουσμάτων 0 έως h με συχνότητα CURE_FREQUENCY
         Random r = new Random();
-        for (int i = 0; i < CovidTreatment.LOOPS; i++) {
+        IntStream.range(0, CovidTreatment.LOOPS).forEach(i -> {
             try {
                 sleep(CovidTreatment.CURE_FREQUENCY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             queue.solveCovidCases(r.nextInt(CovidTreatment.MAX_TREATMENT));
-        }
+        });
     }
 }

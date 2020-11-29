@@ -1,11 +1,11 @@
 package com.concurrency.CovidTreatment;
 
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
 public class CovidTreatment {
     //  Στατικές μεταβλητές προβλήματος
     //  Μέγιστος αριθμός κρουσμάτων k
-    public static final int MAX_CASES = 300;
+    public static final int MAX_CASES = 150;
     //  Πλήθος επαναλήψεων
     public static final int LOOPS = 10;
     //  Χωρητικότητα σε εντατικές Ε
@@ -17,7 +17,7 @@ public class CovidTreatment {
     //  Συχνότητα επώασης κρουσμάτων
     public static final int CURE_FREQUENCY = 5000;
     //  Αριθμός διαθέσιμων νοσοκομείων
-    public static final int HOSPITAL_NUM = 3;
+    public static final int HOSPITAL_NUM = 1;
 
     //  Πρόγραμμα εκτέλεσης έναν ιό και μεταβλητό αριθμό διαθέσιμων νοσοκομείων για θεραπεία
     public static void main(String[] args) {
@@ -27,10 +27,6 @@ public class CovidTreatment {
         Covid covid = new Covid(treatmentUnits);
         covid.start();
         //  Δημιουργία των διαθέσιμων νοσοκομείων (1 ή 3 ανάλογα με το ερώτημα)
-        Hospital[] hospitals = new Hospital[HOSPITAL_NUM];
-        IntStream.range(0, hospitals.length).forEach(i -> {
-            hospitals[i] = new Hospital(treatmentUnits);
-            hospitals[i].start();
-        });
+        Arrays.stream(new Hospital[HOSPITAL_NUM]).forEach(h -> new Hospital(treatmentUnits).start());
     }
 }

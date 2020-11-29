@@ -3,14 +3,17 @@ package com.concurrency;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.stream.IntStream;
 
 public class ApiThread extends Thread {
     //  Στατικές μεταβλητές προγράμματος
-    private static final int NUM_OF_THREADS = 1;
-    private static final int API_REQUESTS = 300;
+    private static final int NUM_OF_THREADS = 8;
+    private static final int API_REQUESTS = 50;
     private static final String API_URL = "https://sv443.net/jokeapi/v2/joke/Any?format=txt";
     private static int minText;
     private static int maxText;
@@ -18,6 +21,7 @@ public class ApiThread extends Thread {
 
     //  Χαρακτηριστικά νήματος
     private final int numOfRequests;
+    //  Αρχικοποίηση με τη μέγιστη δυνατή τιμή
     private int minStr = Integer.MAX_VALUE;
     private int maxStr;
     private final HashMap<String, Integer> wordCount = new HashMap<>();
@@ -54,9 +58,7 @@ public class ApiThread extends Thread {
             //  Διαχωρισμός των λέξεων ενός κειμένου
             String[] words = text.split(" ");
             //  Καταμέτρηση πλήθους εμφάνισης λέξεων στο κείμενο
-            for (String w : words) {
-                updateHashMap(wordCount, w, 1);
-            }
+            Arrays.stream(words).forEach(word -> updateHashMap(wordCount, word, 1));
         }
     }
 
@@ -93,16 +95,15 @@ public class ApiThread extends Thread {
         for (ApiThread aThread : threads) {
             aThread.join();
             //  Συγκέντρωση όλων των εμφανίσεων των λέξεων
-            aThread.getWordCount().keySet().forEach(word -> updateHashMap(totalWordCount, word, aThread.getWordCount().get(word)));
+            aThread.getWordCount().forEach((k, v) -> updateHashMap(totalWordCount, k, v));
         }
         //  Υπολογισμός μέγιστου και ελάχιστου κειμένου
         maxText = threads[0].getMaxText();
         minText = threads[0].getMinText();
-        for (ApiThread aThread : threads) {
-            if (maxText < aThread.getMaxText()) maxText = aThread.getMaxText();
-
-            if (minText > aThread.getMinText()) minText = aThread.getMinText();
-        }
+        Arrays.stream(threads).forEach(apiTread -> {
+            if (maxText < apiTread.getMaxText()) maxText = apiTread.getMaxText();
+            if (minText > apiTread.getMinText()) minText = apiTread.getMinText();
+        });
     }
 
     //  Στατική μέθοδος ενημέρωσης hashMap
@@ -129,8 +130,7 @@ public class ApiThread extends Thread {
         System.out.print("\n=============================================================================\n");
         System.out.format("Αναφορά λέξεων και πλήθος εμφάνισης από όλες τις κλήσεις");
         System.out.print("\n=============================================================================\n");
-        for (String word : totalWordCount.keySet()) {
-            System.out.format("Λέξη: %s\t\t\t\tΠλήθος: %d\n", word, totalWordCount.get(word));
-        }
+        TreeMap<String, Integer> sorted = new TreeMap<>(totalWordCount);
+        sorted.forEach((key, val) -> System.out.format("Λέξη: %-30sΠλήθος: %d\n", key, val));
     }
 }

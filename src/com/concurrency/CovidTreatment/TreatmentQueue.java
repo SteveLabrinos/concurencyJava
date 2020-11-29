@@ -2,6 +2,7 @@ package com.concurrency.CovidTreatment;
 
 public class TreatmentQueue {
     //  Χαρακτηριστικά κλάσης διαθέσιμων κλινών και κρουσμάτων που δεν λαμβάνουν θεραπεία
+    private static int incidentCounter = 0;
     private int availableBeds;
     private int unsolvedCases = 0;
 
@@ -10,7 +11,7 @@ public class TreatmentQueue {
         availableBeds = treatmentUnits;
     }
 
-    //  Μέθοδος προσθήκης κρουσμάτων
+    //  Συγχρονισμένη Μέθοδος προσθήκης κρουσμάτων
     public synchronized void newCovidCases(int newCases) {
         if (newCases < 0) {
             throw new IllegalArgumentException("Μη επιτρεπτό μέγεθος");
@@ -20,11 +21,13 @@ public class TreatmentQueue {
         } else {    //  Οι κλίνες επαρκούν για να δεχθούν τα νέα κρούσματα
             this.availableBeds -= newCases;
         }
-        System.out.format("\nΕμφανίστηκαν %d νέα κρούσματα για νοσηλεία. " +
-                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d", newCases, this.unsolvedCases, this.availableBeds);
+        incidentCounter++;
+        System.out.format("\nΠεριστατικό: %d, Εμφανίστηκαν %d νέα κρούσματα για νοσηλεία. " +
+                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d",
+                incidentCounter, newCases, this.unsolvedCases, this.availableBeds);
     }
 
-    //  Μέθοδος αφαίρεσης κρουσμάτων
+    //  Συγχρονισμένη Μέθοδος αφαίρεσης κρουσμάτων
     public synchronized void solveCovidCases(int solvedCases) {
         if (solvedCases < 0) {
             throw new IllegalArgumentException("Μη επιτρεπτό μέγεθος");
@@ -41,7 +44,9 @@ public class TreatmentQueue {
                 this.unsolvedCases = 0; //  Δεν υπάρχουν πλέον κρούσματα χωρίς νοσηλεία
             }
         }
-        System.out.format("\nΑνάρρωσαν %d ασθενείες. " +
-                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d", solvedCases, this.unsolvedCases, this.availableBeds);
+        incidentCounter++;
+        System.out.format("\nΠεριστατικό: %d, Ανάρρωσαν %d ασθενείες. " +
+                "Νέα κρούσματα ΧΩΡΙΣ νοσηλεία: %d. Διαθέσιμες κλίνες: %d",
+                incidentCounter, solvedCases, this.unsolvedCases, this.availableBeds);
     }
 }
